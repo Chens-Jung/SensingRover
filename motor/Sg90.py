@@ -1,5 +1,5 @@
 import time
-from module.Pca9685 import Pca9685
+from motor.Pca9685 import Pca9685
 
 class Sg90:
     def __init__(self, pca9685, frequency=50):

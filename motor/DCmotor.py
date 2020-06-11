@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from module.Pca9685 import Pca9685
+from motor.Pca9685 import Pca9685
 import time
 
 class DCmotor:

@@ -15,8 +15,8 @@ from module.ActiveBuzzer import ActiveBuzzer
 from module.LaserEmitter import LaserEmitter
 from module.TrackingSensor import TrackingSensor
 
-from module.Sg90 import Sg90
-from module.Pca9685 import Pca9685
+from motor.Sg90 import Sg90
+from motor.Pca9685 import Pca9685
 from module.Lcd1602 import Lcd1602
 
 from module.Pcf8591 import Pcf8591
