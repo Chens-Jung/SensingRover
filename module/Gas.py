@@ -1,7 +1,7 @@
 import time
 from module.Pcf8591 import Pcf8591
 
-class Gas:
+class Gas():
     def __init__(self, pcf8591, ain=0):
         self.__pcf8591 = pcf8591
         self.__ain = ain

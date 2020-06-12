@@ -9,14 +9,13 @@ class TrackingSensor:
         GPIO.setup(trackpin, GPIO.IN)
 
     def read(self):
-        while True:
-            if GPIO.input(self.__trackpin) == GPIO.LOW:
-                print('White line is detected')
+        if GPIO.input(self.__trackpin) == GPIO.LOW:
+            print('White line is detected')
+            return 1
 
-            else:
-                print('Black line is detected')
-
-            time.sleep(1)
+        else:
+            print('Black line is detected')
+            return 0
 
     def destroy(self):
         GPIO.cleanup(self.__trackpin)
