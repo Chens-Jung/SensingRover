@@ -21,6 +21,10 @@ from module.Thermistor import Thermistor
 from module.HcSr04 import HcSr04
 from module.TrackingSensor import TrackingSensor
 
+from motor.Pca9685 import Pca9685
+from motor.Sg90 import Sg90
+from motor.DCmotor import DCmotor
+
 
 class SensingRover:
     def __init__(self):
@@ -42,6 +46,15 @@ class SensingRover:
         self.__message = {}
 
         # 모터
+        self.__pca9685 = Pca9685()
+        self.__sg90 = Sg90(self.__pca9685)
+        self.__dcMotor1 = DCmotor(11, 12, self.__pca9685, 5)
+        self.__dcMotor2 = DCmotor(13, 15, self.__pca9685, 4)
+        self.__camera_y_servo = 0
+        self.__camera_x_servo = 1
+        self.__ultrasonic_servo = 2
+        self.__handle_servo = 3
+
 
     # module not sensor----------------------------------
     # buzzer method
@@ -72,24 +85,68 @@ class SensingRover:
         self.__lcd.write(x2, y2, data2)
     # -----------------------------------------------------
 
-    # sensor moduel----------------------------------------
-    # gas method
+    # sensor module----------------------------------------
     def gasRead(self):
         gas_value = self.__gas.read()
         return gas_value
 
     def sensorRead(self):
-        self.__message["gas"] = self.__gas.read()
-        self.__message["photoresistor"] = self.__photoresistor.read()
-        self.__message["thermistor"] = self.__thermistor.read()
-        self.__message["ultrasonic"] = self.__ultrasonic.distance()
-        self.__message["tracking"] = self.__tracking.read()
-
-
-
+        self.__message["gas"] = self.__gas.value
+        self.__message["photoresistor"] = self.__photoresistor.value
+        self.__message["thermistor"] = self.__thermistor.value
+        self.__message["ultrasonic"] = self.__ultrasonic.value
+        self.__message["tracking"] = self.__tracking.value
+        self.__message["rgbLed_state"] = self.__rgbLed.state
+        self.__message["laseremmiter_state"] = self.__laserEmitter.state
+        self.__message["buzzer_state"] = self.__activeBuzzer.state
+        self.__message["lcd_state"] = "0:"+self.__lcd.state1 + ", 1:" + self.__lcd.state2
         jsonMessage = json.dumps(self.__message)
         return jsonMessage
 
+    def lcd_test(self, message):
+        self.__lcd.write(0, 0, message["lcd0"])
+        self.__lcd.write(0, 1, message["lcd1"])
+
+    # ------------------------------------------------------
+
+    # motor -------------------------------------------------
+    def angle_camera_x(self, angle):
+        self.__sg90.angle(self.__camera_x_servo, angle)
+    def angle_camera_y(self, angle):
+        self.__sg90.angle(self.__camera_y_servo, angle)
+    def angle_ultrasonic(self, angle):
+        self.__sg90.angle(self.__ultrasonic_servo, angle)
+    def angle_handle(self, angle):
+        self.__sg90.angle(self.__handle_servo, angle)
+
+
+    def forward(self):
+        self.__dcMotor1.forward()
+        self.__dcMotor2.forward()
+
+    def backward(self):
+        self.__dcMotor1.backward()
+        self.__dcMotor2.backward()
+
+    def setSpeed(self, pwm):
+        self.__dcMotor1.setSpeed(pwm)
+        self.__dcMotor2.setSpeed(pwm)
+
+    def stop(self):
+        self.__dcMotor1.stop()
+        self.__dcMotor2.stop()
 
 
 
+if __name__ == '__main__':
+    sr = SensingRover()
+    sr.forward()
+    sr.setSpeed(1000)
+    time.sleep(2.5)
+
+    sr.stop()
+
+    sr.backward()
+    sr.setSpeed(1500)
+    time.sleep(2.5)
+    sr.stop()

@@ -8,7 +8,10 @@ class Lcd1602:
 	def __init__(self, addr):
 		self.__bus = smbus.SMBus(1)
 		self.__addr = addr
+		self.state1 = ""
+		self.state2 = ""
 		self.init()
+
 
 	def init(self):
 		try:
@@ -82,6 +85,11 @@ class Lcd1602:
 			y = 0
 		if y > 1:
 			y = 1
+
+		if y == 0:
+			self.state1 = str
+		else:
+			self.state2 = str
 
 		# Move cursor
 		addr = 0x80 + 0x40 * y + x

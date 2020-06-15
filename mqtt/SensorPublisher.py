@@ -21,6 +21,7 @@ class MqttPublisher:
     def __on_connect(self, client, userdata, flags, rc):
         print("** connection **")
 
+
     def __on_disconnect(self, client, userdata, rc):
         print("** disconnection **")
 

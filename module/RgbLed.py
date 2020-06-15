@@ -11,7 +11,7 @@ class RgbLed:
         self.__redpin = redpin
         self.__greenpin = greenpin
         self.__bluepin = bluepin
-        self.state = None
+        self.state = "OFF"
         GPIO.setmode(GPIO.BOARD)
         GPIO.setwarnings(False)
         if redpin is not None:
@@ -49,7 +49,7 @@ class RgbLed:
             GPIO.output(self.__bluepin, GPIO.LOW)
 
     def off(self):
-        self.state = None
+        self.state = "OFF"
         if self.__redpin is not None:
             GPIO.output(self.__redpin, GPIO.HIGH)
         if self.__greenpin is not None:

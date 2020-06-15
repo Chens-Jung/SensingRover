@@ -30,7 +30,7 @@ class ImageMqttPublisher:
                     print("video capture fail")
                     break
                 self.sendBase64(frame)
-                print("send")
+                # print("send")
             else:
                 print("videoCapture is not opened")
                 break
@@ -78,7 +78,7 @@ if __name__ == '__main__':
                 print("video capture fail")
                 break
             imageMqttPublisher.sendBase64(frame)
-            print("send")
+            # print("send")
         else:
             print("videoCapture is not opened")
             break
