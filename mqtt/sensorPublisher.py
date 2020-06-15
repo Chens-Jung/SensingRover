@@ -4,6 +4,7 @@ import json
 import time
 import random
 from sensing_rover.SensingRover import SensingRover
+from module.Camera import Camera
 
 
 class MqttPublisher:

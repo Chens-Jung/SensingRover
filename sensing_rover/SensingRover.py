@@ -79,11 +79,14 @@ class SensingRover:
         return gas_value
 
     def sensorRead(self):
-        self.__message["gas"]=self.__gas.read()
-        self.__message["photoresistor"]=self.__photoresistor.read()
-        self.__message["thermistor"]=self.__thermistor.read()
-        self.__message["ultrasonic"]=self.__ultrasonic.distance()
-        self.__message["tracking"]=self.__tracking.read()
+        self.__message["gas"] = self.__gas.read()
+        self.__message["photoresistor"] = self.__photoresistor.read()
+        self.__message["thermistor"] = self.__thermistor.read()
+        self.__message["ultrasonic"] = self.__ultrasonic.distance()
+        self.__message["tracking"] = self.__tracking.read()
+
+
+
         jsonMessage = json.dumps(self.__message)
         return jsonMessage
 
