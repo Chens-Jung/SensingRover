@@ -54,6 +54,7 @@ class SensingRover:
         self.__camera_x_servo = 1
         self.__ultrasonic_servo = 2
         self.__handle_servo = 3
+        self.__dcMotor_state = "stop"
 
 
     # module not sensor----------------------------------
@@ -96,14 +97,18 @@ class SensingRover:
         self.__message["thermistor"] = self.__thermistor.value
         self.__message["ultrasonic"] = self.__ultrasonic.value
         self.__message["tracking"] = self.__tracking.value
+
         self.__message["rgbLed_state"] = self.__rgbLed.state
         self.__message["laseremmiter_state"] = self.__laserEmitter.state
         self.__message["buzzer_state"] = self.__activeBuzzer.state
         self.__message["lcd_state"] = "0:"+self.__lcd.state1 + ", 1:" + self.__lcd.state2
+
+        self.__message["dcMotor_state"] = self.__dcMotor_state
         jsonMessage = json.dumps(self.__message)
         return jsonMessage
 
     def lcd_test(self, message):
+        self.__lcd.clear()
         self.__lcd.write(0, 0, message["lcd0"])
         self.__lcd.write(0, 1, message["lcd1"])
 
@@ -121,10 +126,12 @@ class SensingRover:
 
 
     def forward(self):
+        self.__dcMotor_state = "forward"
         self.__dcMotor1.forward()
         self.__dcMotor2.forward()
 
     def backward(self):
+        self.__dcMotor_state = "backward"
         self.__dcMotor1.backward()
         self.__dcMotor2.backward()
 
@@ -133,6 +140,7 @@ class SensingRover:
         self.__dcMotor2.setSpeed(pwm)
 
     def stop(self):
+        self.__dcMotor_state = "stop"
         self.__dcMotor1.stop()
         self.__dcMotor2.stop()
 

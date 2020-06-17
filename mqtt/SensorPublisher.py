@@ -8,14 +8,14 @@ from module.Camera import Camera
 
 
 class MqttPublisher:
-    def __init__(self, brokerIp=None, brokerPort=1883, topic=None):
+    def __init__(self, brokerIp=None, brokerPort=1883, topic=None, sensingRover=None):
         self.__brokerIp = brokerIp
         self.__brokerPort = brokerPort
         self.__topic = topic
         self.__client = mqtt.Client()
         self.__client.on_connect = self.__on_connect
         self.__client.on_disconnect = self.__on_disconnect
-        self.__sensingrover = SensingRover()
+        self.__sensingrover = sensingRover
         self.__stop = False
 
     def __on_connect(self, client, userdata, flags, rc):

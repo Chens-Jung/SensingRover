@@ -21,3 +21,11 @@ class LaserEmitter:
         self.state = "OFF"
         GPIO.output(self.__laserpin, GPIO.HIGH)
         GPIO.cleanup(self.__laserpin)
+
+if __name__ == '__main__':
+    laser = LaserEmitter(37)
+    laser.on()
+    time.sleep(3)
+
+    laser.off()
+    time.sleep(3)
