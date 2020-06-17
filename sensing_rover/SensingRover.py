@@ -145,7 +145,6 @@ class SensingRover:
         self.__dcMotor2.stop()
 
 
-
 if __name__ == '__main__':
     sr = SensingRover()
     sr.forward()

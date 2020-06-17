@@ -5,10 +5,10 @@ from mqtt.SensorSubscriber import MqttSubscriber
 from mqtt.CameraPublisher import ImageMqttPublisher
 sensingRover = SensingRover()
 
-mqttPublisher = MqttPublisher("192.168.3.183", topic="/sensor", sensingRover=sensingRover)
+mqttPublisher = MqttPublisher("192.168.3.32", topic="/sensor")
 mqttPublisher.start()
 
-imageMqttPublisher = ImageMqttPublisher("192.168.3.183", 1883, "/camerapub")
+imageMqttPublisher = ImageMqttPublisher("192.168.3.32", 1883, "/camerapub")
 imageMqttPublisher.start()
-mqttSubscriber = MqttSubscriber("192.168.3.183", topic="command/#", sensingRover=sensingRover)
+mqttSubscriber = MqttSubscriber("192.168.3.32", topic="/lcd")
 mqttSubscriber.start()
