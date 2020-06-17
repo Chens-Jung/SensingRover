@@ -54,7 +54,9 @@ class SensingRover:
         self.__camera_x_servo = 1
         self.__ultrasonic_servo = 2
         self.__handle_servo = 3
+
         self.__dcMotor_state = "stop"
+        self.__handle_angle = 90
 
 
     # module not sensor----------------------------------
@@ -124,6 +126,28 @@ class SensingRover:
     def angle_handle(self, angle):
         self.__sg90.angle(self.__handle_servo, angle)
 
+    def handle_left(self):
+        if self.__handle_angle >= 20:
+            self.__handle_angle -= 2
+        self.__sg90.angle(self.__handle_servo, self.__handle_angle)
+    def handle_right(self):
+        if self.__handle_angle <= 160:
+            self.__handle_angle += 2
+        self.__sg90.angle(self.__handle_servo, self.__handle_angle)
+    def handle_refront(self):
+        while True:
+            if self.__handle_angle == 90:
+                break
+            if self.__handle_angle == 91:
+                break
+            if self.__handle_angle == 89:
+                break
+
+            if self.__handle_angle < 90:
+                self.__handle_angle += 1
+            else:
+                self.__handle_angle -= 1
+            self.__sg90.angle(self.__handle_servo, self.__handle_angle)
 
     def forward(self):
         self.__dcMotor_state = "forward"

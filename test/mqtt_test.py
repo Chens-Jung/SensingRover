@@ -4,6 +4,7 @@ from mqtt.SensorPublisher import MqttPublisher
 from mqtt.SensorSubscriber import MqttSubscriber
 from mqtt.CameraPublisher import ImageMqttPublisher
 sensingRover = SensingRover()
+sensingRover.angle_handle(90)
 
 mqttPublisher = MqttPublisher("192.168.3.183", topic="/sensor", sensingRover=sensingRover)
 mqttPublisher.start()

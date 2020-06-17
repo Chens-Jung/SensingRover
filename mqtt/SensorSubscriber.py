@@ -43,6 +43,12 @@ class MqttSubscriber:
                 self.__sensing_rover.setSpeed(1000)
             if messageObject["direction"] == "stop":
                 self.__sensing_rover.stop()
+            if messageObject["direction"] == "left":
+                self.__sensing_rover.handle_left()
+            if messageObject["direction"] == "right":
+                self.__sensing_rover.handle_right()
+            if messageObject["direction"] == "front":
+                self.__sensing_rover.handle_refront()
 
             self.__sensing_rover.setSpeed(800+int(messageObject["pwm"])*400)
 
