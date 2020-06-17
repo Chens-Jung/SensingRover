@@ -33,24 +33,34 @@ class MqttSubscriber:
             else:
                 self.__sensing_rover.laserOff()
         elif "backTire" in message.topic:
-            strMessage = str(message.payload, encoding="UTF-8")
-            messageObject = json.loads(strMessage)
-            if messageObject["direction"] == "forward":
+            if "forward" in message.topic:
                 self.__sensing_rover.forward()
-                self.__sensing_rover.setSpeed(1000)
-            if messageObject["direction"] == "backward":
+            elif "backward" in message.topic:
                 self.__sensing_rover.backward()
-                self.__sensing_rover.setSpeed(1000)
-            if messageObject["direction"] == "stop":
+            elif "stop" in message.topic:
                 self.__sensing_rover.stop()
-            if messageObject["direction"] == "left":
+            elif "respeed" in message.topic:
+                self.__sensing_rover.respeed()
+            elif "button" in message.topic:
+                strMessage = str(message.payload, encoding="UTF-8")
+                messageObject = json.loads(strMessage)
+                print(messageObject)
+                if messageObject["pwm"] != 0:
+                    self.__sensing_rover.button_setSpeed(800 + int(messageObject["pwm"]) * 400)
+                if messageObject["direction"] == "forward":
+                    self.__sensing_rover.button_forward()
+                elif messageObject["direction"] == "backward":
+                    self.__sensing_rover.button_backward()
+                elif messageObject["direction"] == "stop":
+                    self.__sensing_rover.button_stop()
+        elif "frontTire" in message.topic:
+            if "left" in message.topic:
                 self.__sensing_rover.handle_left()
-            if messageObject["direction"] == "right":
+            elif "right" in message.topic:
                 self.__sensing_rover.handle_right()
-            if messageObject["direction"] == "front":
+            elif "front" in message.topic:
                 self.__sensing_rover.handle_refront()
 
-            self.__sensing_rover.setSpeed(800+int(messageObject["pwm"])*400)
 
     def __subscribe(self):
         self.__client.connect(self.__brokerip, self.__brokerport)
