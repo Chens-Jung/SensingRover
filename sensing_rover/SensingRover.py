@@ -57,6 +57,7 @@ class SensingRover:
 
         self.__dcMotor_state = "stop"
         self.__handle_angle = 90
+        self.__dcMotor_speed = 0
 
 
     # module not sensor----------------------------------
@@ -127,13 +128,15 @@ class SensingRover:
         self.__sg90.angle(self.__handle_servo, angle)
 
     def handle_left(self):
-        if self.__handle_angle >= 20:
+        if self.__handle_angle >= 2:
             self.__handle_angle -= 2
-        self.__sg90.angle(self.__handle_servo, self.__handle_angle)
+            self.__sg90.angle(self.__handle_servo, self.__handle_angle)
+        print(self.__handle_angle)
     def handle_right(self):
-        if self.__handle_angle <= 160:
+        if self.__handle_angle <= 178:
             self.__handle_angle += 2
-        self.__sg90.angle(self.__handle_servo, self.__handle_angle)
+            self.__sg90.angle(self.__handle_servo, self.__handle_angle)
+        print(self.__handle_angle)
     def handle_refront(self):
         while True:
             if self.__handle_angle == 90:
@@ -151,11 +154,19 @@ class SensingRover:
 
     def forward(self):
         self.__dcMotor_state = "forward"
+        if self.__dcMotor_speed < 4050:
+            self.__dcMotor_speed += 50
+        self.setSpeed(self.__dcMotor_speed)
+        print(self.__dcMotor_speed)
         self.__dcMotor1.forward()
         self.__dcMotor2.forward()
 
     def backward(self):
         self.__dcMotor_state = "backward"
+        if self.__dcMotor_speed < 4050:
+            self.__dcMotor_speed += 50
+        self.setSpeed(self.__dcMotor_speed)
+        print(self.__dcMotor_speed)
         self.__dcMotor1.backward()
         self.__dcMotor2.backward()
 
@@ -165,10 +176,33 @@ class SensingRover:
 
     def stop(self):
         self.__dcMotor_state = "stop"
+        self.__dcMotor_speed = 0
         self.__dcMotor1.stop()
         self.__dcMotor2.stop()
 
+    def respeed(self):
+        self.__dcMotor_speed = 0
+        self.setSpeed(self.__dcMotor_speed)
+        print(self.__dcMotor_speed)
 
+    def button_forward(self):
+        self.__dcMotor_state = "forward"
+        self.__dcMotor1.forward()
+        self.__dcMotor2.forward()
+
+    def button_backward(self):
+        self.__dcMotor_state = "backward"
+        self.__dcMotor1.backward()
+        self.__dcMotor2.backward()
+
+    def button_stop(self):
+        self.__dcMotor_state = "stop"
+        self.__dcMotor1.stop()
+        self.__dcMotor2.stop()
+
+    def button_setSpeed(self, pwm):
+        self.__dcMotor1.setSpeed(pwm)
+        self.__dcMotor2.setSpeed(pwm)
 
 if __name__ == '__main__':
     sr = SensingRover()
