@@ -137,7 +137,7 @@ class SensingRover:
         print("000000000000000000000000")
 
     def dist_angle90(self):
-        self.__sg90.angle(self.__ultrasonic_servo, 10)
+        self.__sg90.angle(self.__ultrasonic_servo, 90)
         print("90909090")
 
     def dist_angle180(self):
