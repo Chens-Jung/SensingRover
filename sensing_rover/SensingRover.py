@@ -50,12 +50,15 @@ class SensingRover:
         self.__sg90 = Sg90(self.__pca9685)
         self.__dcMotor1 = DCmotor(11, 12, self.__pca9685, 5)
         self.__dcMotor2 = DCmotor(13, 15, self.__pca9685, 4)
-        self.__camera_y_servo = 0
-        self.__camera_x_servo = 1
-        self.__ultrasonic_servo = 2
-        self.__handle_servo = 3
+        # 3.28 씽씽카 번호
+        # self.__camera_y_servo = 0
+        # self.__camera_x_servo = 1
+        # self.__ultrasonic_servo = 2
+        # self.__handle_servo = 3
+        # 3.23 씽씽카 번호
         self.__ultrasonic_servo = 7
         self.__camera_x_servo = 9
+        self.__handle_servo = 15
 
         self.__dcMotor_state = "stop"
         self.__handle_angle = 90
@@ -131,27 +134,6 @@ class SensingRover:
         self.__sg90.angle(self.__ultrasonic_servo, angle)
     def angle_handle(self, angle):
         self.__sg90.angle(self.__handle_servo, angle)
-
-    def dist_angle0(self):
-        self.__sg90.angle(self.__ultrasonic_servo, 0)
-        print("000000000000000000000000")
-
-    def dist_angle90(self):
-        self.__sg90.angle(self.__ultrasonic_servo, 90)
-        print("90909090")
-
-    def dist_angle180(self):
-        self.__sg90.angle(self.__ultrasonic_servo, 180)
-        print("180")
-
-    def moterx_angle0(self):
-        self.__sg90.angle(self.__camera_x_servo, 0)
-
-    def moterx_angle90(self):
-        self.__sg90.angle(self.__camera_x_servo, 10)
-
-    def moterx_angle180(self):
-        self.__sg90.angle(self.__camera_x_servo, 180)
 
     def handle_left(self):
         if self.__handle_angle >= 2:

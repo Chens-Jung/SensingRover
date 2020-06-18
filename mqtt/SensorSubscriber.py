@@ -83,26 +83,26 @@ class MqttSubscriber:
                 self.__sensing_rover.buzzerActive()
         elif "dist" in message.topic:
             print("dist")
-            if "0" in message.topic:
-                print("0")
-                self.__sensing_rover.dist_angle0()
-            elif "90" in message.topic:
-                print("90")
-                self.__sensing_rover.dist_angle90()
-            elif "180" in message.topic:
-                print("180")
-                self.__sensing_rover.dist_angle180()
+            if "left" in message.topic:
+                print("left")
+                self.__sensing_rover.angle_ultrasonic(0)
+            elif "middle" in message.topic:
+                print("middle")
+                self.__sensing_rover.angle_ultrasonic(90)
+            elif "right" in message.topic:
+                print("right")
+                self.__sensing_rover.angle_ultrasonic(180)
         elif "moterx" in message.topic:
             print("moterx")
-            if "0" in message.topic:
-                print("0")
-                self.__sensing_rover.moterx_angle0()
-            elif "90" in message.topic:
-                print("90")
-                self.__sensing_rover.moterx_angle90()
-            elif "180" in message.topic:
-                print("180")
-                self.__sensing_rover.moterx_angle180()
+            if "left" in message.topic:
+                print("left")
+                self.__sensing_rover.angle_camera_x(10)
+            elif "middle" in message.topic:
+                print("middle")
+                self.__sensing_rover.angle_camera_x(170)
+            elif "right" in message.topic:
+                print("right")
+                self.__sensing_rover.angle_camera_x(190)
 
     def __subscribe(self):
         self.__client.connect(self.__brokerip, self.__brokerport)
