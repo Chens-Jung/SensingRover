@@ -54,6 +54,8 @@ class SensingRover:
         self.__camera_x_servo = 1
         self.__ultrasonic_servo = 2
         self.__handle_servo = 3
+        self.__ultrasonic_servo = 7
+        self.__camera_x_servo = 9
 
         self.__dcMotor_state = "stop"
         self.__handle_angle = 90
@@ -66,6 +68,9 @@ class SensingRover:
         self.__activeBuzzer.on()
     def buzzerOff(self):
         self.__activeBuzzer.off()
+    def buzzerActive(self):
+        print("active")
+        self.__activeBuzzer.active()
 
     # laser method
     def laserOn(self):
@@ -126,6 +131,27 @@ class SensingRover:
         self.__sg90.angle(self.__ultrasonic_servo, angle)
     def angle_handle(self, angle):
         self.__sg90.angle(self.__handle_servo, angle)
+
+    def dist_angle0(self):
+        self.__sg90.angle(self.__ultrasonic_servo, 0)
+        print("000000000000000000000000")
+
+    def dist_angle90(self):
+        self.__sg90.angle(self.__ultrasonic_servo, 10)
+        print("90909090")
+
+    def dist_angle180(self):
+        self.__sg90.angle(self.__ultrasonic_servo, 180)
+        print("180")
+
+    def moterx_angle0(self):
+        self.__sg90.angle(self.__camera_x_servo, 0)
+
+    def moterx_angle90(self):
+        self.__sg90.angle(self.__camera_x_servo, 10)
+
+    def moterx_angle180(self):
+        self.__sg90.angle(self.__camera_x_servo, 180)
 
     def handle_left(self):
         if self.__handle_angle >= 2:

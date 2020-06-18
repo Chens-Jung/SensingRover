@@ -21,7 +21,7 @@ if __name__ == '__main__':
     pca9685 = Pca9685()
     sg90 = Sg90(pca9685)
 
-    channel = 0
+    channel = 7
 
     while True:
         # 0도

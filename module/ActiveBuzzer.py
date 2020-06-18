@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 class ActiveBuzzer:
-    ON ="on"
+    ON = "on"
     OFF = "off"
 
     def __init__(self, channel):
@@ -20,15 +20,25 @@ class ActiveBuzzer:
         self.state = ActiveBuzzer.OFF
         GPIO.output(self.__channel, GPIO.HIGH)
 
+    def active(self):
+        for i in range(4):
+            GPIO.output(self.__channel, GPIO.LOW)
+            self.state = ActiveBuzzer.ON
+            time.sleep(0.3)
+            self.state = ActiveBuzzer.OFF
+            GPIO.output(self.__channel, GPIO.HIGH)
+            time.sleep(0.3)
+
 
 if __name__ == '__main__':
     try:
         buzzer = ActiveBuzzer(35)
-        for i in range(5):
-            buzzer.on()
-            time.sleep(0.5)
-            buzzer.off()
-            time.sleep(0.5)
+        # for i in range(5):
+        #     buzzer.on()
+        #     time.sleep(0.5)
+        #     buzzer.off()
+        #     time.sleep(0.5)
+        buzzer.active()
 
     except KeyboardInterrupt:
         print()

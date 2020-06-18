@@ -60,19 +60,22 @@ class RgbLed:
 
 if __name__ == "__main__":
     try:
-        rgbLed = RgbLed(11, 12, 13)
-        for i in range(2):
-            rgbLed.red()
-            time.sleep(1)
-            rgbLed.off()
-
-            rgbLed.green()
-            time.sleep(1)
-            rgbLed.off()
-
-            rgbLed.blue()
-            time.sleep(1)
-            rgbLed.off()
+        rgbLed = RgbLed(16, 18, 22)
+        # for i in range(2):
+        #     rgbLed.red()
+        #     time.sleep(1)
+        #     rgbLed.off()
+        #
+        #     rgbLed.green()
+        #     time.sleep(1)
+        #     rgbLed.off()
+        #
+        #     rgbLed.blue()
+        #     time.sleep(1)
+        #     rgbLed.off()
+        rgbLed.red()
+        time.sleep(5)
+        rgbLed.off()
 
     # Ctrl+C
     except KeyboardInterrupt:

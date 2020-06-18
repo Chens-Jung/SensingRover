@@ -53,6 +53,7 @@ class MqttSubscriber:
                     self.__sensing_rover.button_backward()
                 elif messageObject["direction"] == "stop":
                     self.__sensing_rover.button_stop()
+
         elif "frontTire" in message.topic:
             if "left" in message.topic:
                 self.__sensing_rover.handle_left()
@@ -61,6 +62,47 @@ class MqttSubscriber:
             elif "front" in message.topic:
                 self.__sensing_rover.handle_refront()
 
+        elif "rgbLed" in message.topic:
+            if "red" in message.topic:
+                self.__sensing_rover.ledRed()
+                print("red")
+            elif "green" in message.topic:
+                self.__sensing_rover.ledGreen()
+            elif "blue" in message.topic:
+                print("blue")
+                self.__sensing_rover.ledBlue()
+            elif "off" in message.topic:
+                self.__sensing_rover.ledOff()
+        elif "buzzer" in message.topic:
+            if "on" in message.topic:
+                self.__sensing_rover.buzzerOn()
+            elif "off" in message.topic:
+                self.__sensing_rover.buzzerOff()
+            elif "active" in message.topic:
+                print("active2")
+                self.__sensing_rover.buzzerActive()
+        elif "dist" in message.topic:
+            print("dist")
+            if "0" in message.topic:
+                print("0")
+                self.__sensing_rover.dist_angle0()
+            elif "90" in message.topic:
+                print("90")
+                self.__sensing_rover.dist_angle90()
+            elif "180" in message.topic:
+                print("180")
+                self.__sensing_rover.dist_angle180()
+        elif "moterx" in message.topic:
+            print("moterx")
+            if "0" in message.topic:
+                print("0")
+                self.__sensing_rover.moterx_angle0()
+            elif "90" in message.topic:
+                print("90")
+                self.__sensing_rover.moterx_angle90()
+            elif "180" in message.topic:
+                print("180")
+                self.__sensing_rover.moterx_angle180()
 
     def __subscribe(self):
         self.__client.connect(self.__brokerip, self.__brokerport)
@@ -76,5 +118,5 @@ class MqttSubscriber:
         self.__client.disconnect()
 
 if __name__ == '__main__':
-    mqttSubscriber = MqttSubscriber("192.168.3.131", topic="/sensor/distance")
+    mqttSubscriber = MqttSubscriber("192.168.3.32", topic="/sensor/distance")
     mqttSubscriber.start()
