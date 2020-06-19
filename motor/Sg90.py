@@ -14,6 +14,7 @@ class Sg90:
         return int(164 + angle * ((553-164) / 180))
 
     def angle(self, channel, angle):
+        print("sg90.angle 실행")
         self.__pca9685.write(channel, self.__map(angle))
 
 
@@ -21,19 +22,19 @@ if __name__ == '__main__':
     pca9685 = Pca9685()
     sg90 = Sg90(pca9685)
 
-    channel = 7
+    channel = 1
 
     while True:
         # 0도
         sg90.angle(channel, 0)
-        time.sleep(0.3)
+        time.sleep(1)
 
         # 90도
         sg90.angle(channel, 90)
-        time.sleep(0.3)
+        time.sleep(1)
 
         # 180도
         sg90.angle(channel, 180)
-        time.sleep(0.3)
+        time.sleep(1)
 
     print("Program exit")

@@ -68,6 +68,7 @@ class Pca9685:
         self.__write_byte_data(self._MODE1, old_mode | 0x80)
 
     def write(self, channel, step):
+        print("Pca9685.write 실행")
         self.__write_byte_data(self._LED0_ON_L + 4 * channel, 0 & 0xFF)
         self.__write_byte_data(self._LED0_ON_H + 4 * channel, 0 >> 8)
         self.__write_byte_data(self._LED0_OFF_L + 4 * channel, step & 0xFF)

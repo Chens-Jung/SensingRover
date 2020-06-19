@@ -102,6 +102,7 @@ class MqttSubscriber:
                 print("[카메라] back")
                 self.__sensing_rover.angle_camera_back()
 
+
     def __subscribe(self):
         self.__client.connect(self.__brokerip, self.__brokerport)
         self.__client.loop_forever()
