@@ -81,40 +81,26 @@ class MqttSubscriber:
             elif "active" in message.topic:
                 print("active2")
                 self.__sensing_rover.buzzerActive()
-        elif "dist" in message.topic:
-            print("dist")
+        elif "distance" in message.topic:
             if "left" in message.topic:
-                print("left")
-                self.__sensing_rover.angle_ultrasonic(0)
-            elif "middle" in message.topic:
-                print("middle")
-                self.__sensing_rover.angle_ultrasonic(90)
+                print("[거리] left")
+                self.__sensing_rover.angle_distance_left()
             elif "right" in message.topic:
-                print("right")
-                self.__sensing_rover.angle_ultrasonic(180)
-        elif "moterx" in message.topic:
-            print("moterx")
+                print("[거리] right")
+                self.__sensing_rover.angle_distance_right()
+        elif "camera" in message.topic:
             if "left" in message.topic:
-                print("left")
-                self.__sensing_rover.angle_camera_x(0)
-            elif "middle" in message.topic:
-                print("middle")
-                self.__sensing_rover.angle_camera_x(90)
+                print("[카메라] left")
+                self.__sensing_rover.angle_camera_left()
             elif "right" in message.topic:
-                print("right")
-                self.__sensing_rover.angle_camera_x(180)
-
-        elif "motery" in message.topic:
-            print("motery")
-            if "left" in message.topic:
-                print("left")
-                self.__sensing_rover.angle_camera_y(10)
-            elif "middle" in message.topic:
-                print("middle")
-                self.__sensing_rover.angle_camera_y(90)
-            elif "right" in message.topic:
-                print("right")
-                self.__sensing_rover.angle_camera_y(180)
+                print("[카메라] right")
+                self.__sensing_rover.angle_camera_right()
+            elif "front" in message.topic:
+                print("[카메라] front")
+                self.__sensing_rover.angle_camera_front()
+            elif "back" in message.topic:
+                print("[카메라] back")
+                self.__sensing_rover.angle_camera_back()
 
     def __subscribe(self):
         self.__client.connect(self.__brokerip, self.__brokerport)

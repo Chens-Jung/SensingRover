@@ -61,9 +61,13 @@ class SensingRover:
         self.__camera_x_servo = 9
         self.__handle_servo = 15
 
+        # 기본 상태 설정
         self.__dcMotor_state = "stop"
         self.__handle_angle = 90
         self.__dcMotor_speed = 0
+        self.__camera_x_angle = 90
+        self.__camera_y_angle = 90
+        self.__distance_angle = 90
 
 
     # module not sensor----------------------------------
@@ -127,25 +131,48 @@ class SensingRover:
     # ------------------------------------------------------
 
     # motor -------------------------------------------------
-    def angle_camera_x(self, angle):
-        self.__sg90.angle(self.__camera_x_servo, angle)
-    def angle_camera_y(self, angle):
-        self.__sg90.angle(self.__camera_y_servo, angle)
-    def angle_ultrasonic(self, angle):
-        self.__sg90.angle(self.__ultrasonic_servo, angle)
-    def angle_handle(self, angle):
-        self.__sg90.angle(self.__handle_servo, angle)
+    def angle_camera_left(self):
+        if self.__camera_x_angle >= 2:
+            self.__camera_x_angle -= 2
+            self.__sg90.angle(self.__camera_x_servo, self.__camera_x_angle)
+
+    def angle_camera_right(self):
+        if self.__camera_x_angle <= 178:
+            self.__camera_x_angle += 2
+            self.__sg90.angle(self.__camera_x_servo, self.__camera_x_angle)
+
+    def angle_camera_front(self):
+        if self.__camera_y_angle >= 2:
+            self.__camera_y_angle -= 2
+        self.__sg90.angle(self.__camera_y_servo, self.__camera_y_angle)
+
+    def angle_camera_back(self):
+        if self.__camera_y_angle <= 178:
+            self.__camera_y_angle += 2
+        self.__sg90.angle(self.__camera_y_servo, self.__camera_y_angle)
+
+    # def angle_ultrasonic(self, angle):
+    #     self.__sg90.angle(self.__ultrasonic_servo, angle)
+
+    def angle_distance_left(self):
+        if self.__distance_angle >= 2:
+            self.__distance_angle -= 2
+            self.__sg90.angle(self.__ultrasonic_servo, self.__distance_angle)
+
+    def angle_distance_right(self):
+        if self.__distance_angle <= 178:
+            self.__distance_angle += 2
+            self.__sg90.angle(self.__ultrasonic_servo, self.__distance_angle)
 
     def handle_left(self):
         if self.__handle_angle >= 2:
             self.__handle_angle -= 2
             self.__sg90.angle(self.__handle_servo, self.__handle_angle)
-        print(self.__handle_angle)
     def handle_right(self):
         if self.__handle_angle <= 178:
             self.__handle_angle += 2
             self.__sg90.angle(self.__handle_servo, self.__handle_angle)
-        print(self.__handle_angle)
+
     def handle_refront(self):
         while True:
             if self.__handle_angle == 90:
