@@ -116,5 +116,5 @@ class MqttSubscriber:
         self.__client.disconnect()
 
 if __name__ == '__main__':
-    mqttSubscriber = MqttSubscriber("192.168.3.32", topic="/sensor/distance")
+    mqttSubscriber = MqttSubscriber("192.168.3.131", topic="/sensor/distance")
     mqttSubscriber.start()

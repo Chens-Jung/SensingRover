@@ -51,15 +51,15 @@ class SensingRover:
         self.__dcMotor1 = DCmotor(11, 12, self.__pca9685, 5)
         self.__dcMotor2 = DCmotor(13, 15, self.__pca9685, 4)
         # 3.28 씽씽카 번호
-        # self.__camera_y_servo = 0
-        # self.__camera_x_servo = 1
-        # self.__ultrasonic_servo = 2
-        # self.__handle_servo = 3
+        self.__camera_y_servo = 0
+        self.__camera_x_servo = 1
+        self.__ultrasonic_servo = 2
+        self.__handle_servo = 3
         # 3.23 씽씽카 번호
-        self.__ultrasonic_servo = 7
-        self.__camera_y_servo = 11
-        self.__camera_x_servo = 9
-        self.__handle_servo = 15
+        # self.__ultrasonic_servo = 7
+        # self.__camera_y_servo = 11
+        # self.__camera_x_servo = 9
+        # self.__handle_servo = 15
 
         # 기본 상태 설정
         self.__dcMotor_state = "stop"
@@ -103,10 +103,6 @@ class SensingRover:
     # -----------------------------------------------------
 
     # sensor module----------------------------------------
-    def gasRead(self):
-        gas_value = self.__gas.read()
-        return gas_value
-
     def sensorRead(self):
         self.__message["gas"] = self.__gas.value
         self.__message["photoresistor"] = self.__photoresistor.value
@@ -120,6 +116,7 @@ class SensingRover:
         self.__message["lcd_state"] = "0:"+self.__lcd.state1 + ", 1:" + self.__lcd.state2
 
         self.__message["dcMotor_state"] = self.__dcMotor_state
+        self.__message["dcMotor_speed"] = self.__dcMotor_speed
         jsonMessage = json.dumps(self.__message)
         return jsonMessage
 
@@ -209,6 +206,7 @@ class SensingRover:
     def setSpeed(self, pwm):
         self.__dcMotor1.setSpeed(pwm)
         self.__dcMotor2.setSpeed(pwm)
+        self.__dcMotor_speed = pwm
 
     def stop(self):
         self.__dcMotor_state = "stop"
@@ -233,10 +231,13 @@ class SensingRover:
 
     def button_stop(self):
         self.__dcMotor_state = "stop"
+        self.__dcMotor_speed = 0
         self.__dcMotor1.stop()
         self.__dcMotor2.stop()
 
     def button_setSpeed(self, pwm):
+        print(pwm)
+        self.__dcMotor_speed = pwm
         self.__dcMotor1.setSpeed(pwm)
         self.__dcMotor2.setSpeed(pwm)
 
