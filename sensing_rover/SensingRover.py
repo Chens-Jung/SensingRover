@@ -76,9 +76,6 @@ class SensingRover:
         self.__activeBuzzer.on()
     def buzzerOff(self):
         self.__activeBuzzer.off()
-    def buzzerActive(self):
-        print("active")
-        self.__activeBuzzer.active()
 
     # laser method
     def laserOn(self):
