@@ -96,13 +96,25 @@ class MqttSubscriber:
             print("moterx")
             if "left" in message.topic:
                 print("left")
-                self.__sensing_rover.angle_camera_x(10)
+                self.__sensing_rover.angle_camera_x(0)
             elif "middle" in message.topic:
                 print("middle")
-                self.__sensing_rover.angle_camera_x(170)
+                self.__sensing_rover.angle_camera_x(90)
             elif "right" in message.topic:
                 print("right")
-                self.__sensing_rover.angle_camera_x(190)
+                self.__sensing_rover.angle_camera_x(180)
+
+        elif "motery" in message.topic:
+            print("motery")
+            if "left" in message.topic:
+                print("left")
+                self.__sensing_rover.angle_camera_y(10)
+            elif "middle" in message.topic:
+                print("middle")
+                self.__sensing_rover.angle_camera_y(90)
+            elif "right" in message.topic:
+                print("right")
+                self.__sensing_rover.angle_camera_y(180)
 
     def __subscribe(self):
         self.__client.connect(self.__brokerip, self.__brokerport)

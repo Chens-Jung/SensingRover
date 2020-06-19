@@ -57,6 +57,7 @@ class SensingRover:
         # self.__handle_servo = 3
         # 3.23 씽씽카 번호
         self.__ultrasonic_servo = 7
+        self.__camera_y_servo = 11
         self.__camera_x_servo = 9
         self.__handle_servo = 15
 
