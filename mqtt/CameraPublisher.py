@@ -2,6 +2,7 @@ import cv2
 import paho.mqtt.client as mqtt
 import threading
 import base64
+import numpy as np
 from module.Camera import Camera
 
 
@@ -13,7 +14,9 @@ class ImageMqttPublisher:
         self.client = mqtt.Client()
         self.client.on_connect = self.__on_connect
         self.client.on_disconnect = self.__on_disconnect
+        self.client.on_message = self.__on_message
         self.camera = Camera(0)
+        self.__cnt = 0
 
     def start(self):
         thread = threading.Thread(target=self.__run, daemon=True)
@@ -38,9 +41,24 @@ class ImageMqttPublisher:
 
     def __on_connect(self, client, userdata, flags, rc):
         print("ImageMqttClient mqtt broker connect")
+        self.client.subscribe("command/camera/capture")
 
     def __on_disconnect(self, client, userdata, rc):
         print("ImageMqttClient mqtt broker disconnect")
+
+    def __on_message(self, client, userdata, message):
+        if "capture" in message.topic:
+            retval, frame = self.camera.videoCapture.read()
+            if retval:
+                img = np.copy(frame)
+                cv2.imwrite("/home/pi/Project/SensingRover/capture/capture_image" + str(self.__cnt) + ".jpg", img)
+                self.__cnt += 1
+                capval, bytes = cv2.imencode(".jpg", frame)
+                if capval:
+                    cap_b64_bytes = base64.b64encode(bytes)
+                    self.client.publish("/capturepub", cap_b64_bytes)
+                    print("pub complete")
+
 
     def disconnect(self):
         self.client.disconnect()
@@ -63,6 +81,8 @@ class ImageMqttPublisher:
         self.client.publish(self.pubTopic, b64_bytes)
 
 
+
+
 if __name__ == '__main__':
     videoCapture = cv2.VideoCapture(0)
     videoCapture.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
@@ -78,7 +98,6 @@ if __name__ == '__main__':
                 print("video capture fail")
                 break
             imageMqttPublisher.sendBase64(frame)
-            # print("send")
         else:
             print("videoCapture is not opened")
             break

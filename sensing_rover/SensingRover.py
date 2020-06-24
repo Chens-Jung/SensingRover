@@ -1,10 +1,7 @@
 import sys
 import os
-import threading
 import json
 import time
-import paho.mqtt as mqtt
-import RPi.GPIO as GPIO
 
 filepath=os.path.dirname(os.path.dirname(__file__))
 sys.path.append(filepath)
